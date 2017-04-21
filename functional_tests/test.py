@@ -44,6 +44,8 @@ class NewVisitorTest(LiveServerTestCase):
         #After hitting ENTER, she is brought to a new URL
         #The To-Do list in this page shows "1: Buy peacock feathers"
         inputbox.send_keys(Keys.ENTER)
+        #wait page to redirect
+        time.sleep(1)
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
@@ -61,7 +63,6 @@ class NewVisitorTest(LiveServerTestCase):
         #Idith wants to know wether this website could remember her list
         #She saw the website generate a unique URL for her
         #And there are some text to explain this feature
-        self.fail('Finish the test!')
 
         #Now a new user called Francis visit the website
         
@@ -81,6 +82,8 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys(Keys.ENTER)
+        #wait page to redirect
+        time.sleep(1)
         
         #Francis get a unique URL of his own
         francis_list_url = self.browser.current_url
@@ -93,3 +96,4 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('Buy milk', page_text)
         
         #Both of them are satisfied, and gone to sleep
+        self.fail('Finish the test!')
