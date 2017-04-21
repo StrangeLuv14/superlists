@@ -4,6 +4,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
+import time
 
 
 class NewVisitorTest(unittest.TestCase):
@@ -15,7 +16,9 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.quit()
         
     def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element_by_tag_name('id_list_table')
+        #wait page to refresh in case of getting stale element
+        time.sleep(1)
+        table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
         
@@ -43,10 +46,7 @@ class NewVisitorTest(unittest.TestCase):
         #After hitting ENTER, the page refreshed
         #The To-Do list shows "1: Buy peacock feathers"
         inputbox.send_keys(Keys.ENTER)
-        
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         #The page shows another text area to enter other To-Do items
         #She enters "Use peacock feathers to make a fly" 
@@ -56,7 +56,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #The page refreshed again,there are two items in her list
         self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: Use peacock feathers to make fly')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         #Idis wants to know wether this website could remember her list
         #She saw the website generate a unique URL for her
