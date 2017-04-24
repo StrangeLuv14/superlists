@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 #lists/tests.py
 from django.test import TestCase
 from django.core.urlresolvers import resolve
