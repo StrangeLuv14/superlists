@@ -35,7 +35,7 @@ class NewVisitorTest(FunctionalTest):
         time.sleep(1)
         edith_list_url = self.browser.current_url
         self.assertRegex(edith_list_url, '/lists/.+')
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         #The page shows another text area to enter other To-Do items
         #She enters "Use peacock feathers to make a fly" 
@@ -44,8 +44,8 @@ class NewVisitorTest(FunctionalTest):
         inputbox.send_keys(Keys.ENTER)
 
         #The page refreshed again,there are two items in her list
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
-        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
         #Idith wants to know wether this website could remember her list
         #She saw the website generate a unique URL for her
