@@ -12,10 +12,12 @@ class ItemValidationTest(FunctionalTest):
         self.get_item_input_box().send_keys(Keys.ENTER)
         time.sleep(1)
         
+        
         #Home page refreshed,a error message shows
         #Suggesting the item can not be empty
-        error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You can't have an empty list item")
+        self.wait_for(lambda: self.browser.find_element_by_css_selector(
+        '#id_text:invalid'
+        ))
         
         #She entered some text,then submit again,this time is ok
         self.get_item_input_box().send_keys('Buy milk')
@@ -30,8 +32,9 @@ class ItemValidationTest(FunctionalTest):
         
         #At the item page she sees a similar error message
         self.check_for_row_in_list_table('1: Buy milk')
-        error = self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "You can't have an empty list item")
+        self.wait_for(lambda: self.browser.find_element_by_css_selector(
+        '#id_text:invalid'
+        ))
         
         #Enter some text,then alright
         self.get_item_input_box().send_keys('Make tea')
